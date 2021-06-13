@@ -48,7 +48,8 @@ class App extends PureComponent {
         }
     };
     addingPermitted = ({target}) => {  // получили из модалки ок на добавление товара в cart или wishList
-        // const okBtnTxt = target.innerText;
+console.log(this.state.activeModal);
+        this.closeModal();
         if (this.state.activeModal === "cart") {
             this.addProduct(this.state.addingIdtoCart); // запустили на добавление в Cart товара с id = addingIdtoCart
         } else if (this.state.activeModal === "wishList") {
@@ -80,7 +81,6 @@ class App extends PureComponent {
                 this.saveWishList(currentWishList)
             }
         }
-        this.closeModal();
     };
     saveCart(currentCart) {
         // if (currentCart.length === 0) return;
