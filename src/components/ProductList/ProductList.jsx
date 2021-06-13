@@ -1,10 +1,9 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import Card from '../Card/Card.jsx';
 import './productList.scss';
 import PropTypes from "prop-types";
 
-class ProductList extends PureComponent {
-    render() {
+const ProductList =()=> {
         const {products, cart, wishList, listsHandler} = this.props;
         const cardlist = products.map(productItem =>
             <Card key={productItem.id}
@@ -20,9 +19,7 @@ class ProductList extends PureComponent {
                 {cardlist}
             </div>
         );
-    }
-
-}
+};
 
 ProductList.propTypes = {
     products: PropTypes.arrayOf(

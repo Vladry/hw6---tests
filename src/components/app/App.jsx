@@ -6,7 +6,7 @@ import modBtnCfg from '../Button/modBtnCfg';
 import ProductList from "../ProductList/ProductList";
 import * as cart from "../../utils/cartHandleUtils.js";
 import * as wishList from "../../utils/wishListHandleUtils.js";
-import {Link, animateScroll as scroll} from "react-scroll";
+import {animateScroll as scroll} from "react-scroll";
 
 class App extends PureComponent {
     state = {
