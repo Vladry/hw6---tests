@@ -4,7 +4,7 @@ import Card from "../../components/Card/Card";
 
 const CartBasket = () => {
     const [cartContent, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
-    const [wishList, setWishList] = useState(JSON.parse(localStorage.getItem("wishList")));
+
 
     useEffect(()=>console.log(cartContent));
 
@@ -16,18 +16,11 @@ const CartBasket = () => {
 
 
 
-    const wishListHandler = (id, {target}) => {
-        const newWishListContent = wishList.filter(productItem => productItem.id !== id);
-        setWishList(newWishListContent);
-        localStorage.setItem("wishList", JSON.stringify(newWishListContent));
-    };
-
 
     const cartList = cartContent.map(productItem =>
         <Card key={productItem.id}
               productItem={productItem}
               cartHandler={cartHandler}
-              wishListHandler={wishListHandler}
         />
     );
     let emptyNote;

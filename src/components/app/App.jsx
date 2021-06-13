@@ -100,7 +100,7 @@ class App extends PureComponent {
             <div className={(activeModal === "closed") ? 'wrapper' : 'wrapper  --darkened'}
                  onClick={this.closeModAtSideClick}
             >
-                <h3>Главная</h3>
+                <h3>Страница Заказов</h3>
                 <div className={'modals-container'}>
                     <Modal id='modal' className='modal' header={invokeHeader} text={invokeText}
                            modalState={activeModal} closeModal={this.closeModal}
