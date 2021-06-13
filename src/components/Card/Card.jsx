@@ -37,8 +37,7 @@ class Card extends PureComponent {
                 <div  className="card-svg-section">
                     <RemoveFromCart color={prodIsInCart ? "green" : "red"} width="22"
                                     className='svg-class --activate-cart-modal'
-                                    handler={cartHandler(productItem.id)}/>
-                                    {/*handler={cartHandler.bind(null, productItem.id)}/>*/}
+                                    handler={cartHandler.bind(null, productItem.id)}/>
                 </div>;
         } else if (wishListHandler) { // иначе рендер Card произошел из избранного- тогда рендерим кнопки для избранного
             buttons =
