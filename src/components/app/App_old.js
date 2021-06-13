@@ -7,6 +7,7 @@ import ProductList from "./components/ProductList/ProductList";
 import * as cart from "./utils/cartHandleUtils.js";
 import * as wishList from "./utils/wishListHandleUtils.js";
 import {Link, animateScroll as scroll} from "react-scroll";
+import AppRouts from "./routs/AppRouts";
 
 class App extends PureComponent {
     state = {

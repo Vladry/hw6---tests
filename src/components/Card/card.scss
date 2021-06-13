@@ -1,0 +1,58 @@
+.card-item {
+  position: relative;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  border: 5px groove gray;
+  width: 260px;
+  background-color: white;
+}
+
+.card-image {
+  margin-bottom: 20px;
+  width: 230px;
+  border-radius: 10px;
+  box-shadow: 2px 2px #406062, -1px -1px #406062 ;
+}
+
+.card-header {
+  margin-bottom: 1em;
+}
+
+.card-header, .card-price, .card-art, .card-color, .card-description {
+  text-align: center;
+}
+
+.card-price::before {
+  content: "UAH ";
+}
+.card-art::before {
+  content: "арт. ";
+}
+.card-color::before {
+  content: "цвет: ";
+}
+.card-description {
+}
+.card-btn {
+  margin: 1em auto;
+}
+.card-svg-section {
+  margin: 1em auto;
+  display: flex;
+  justify-content: center;
+  padding: 0 10px 0 10px;
+}
+
+.svg-class {
+  width: 50px;
+  margin: 0 auto;
+  color: blue;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 200, 0, 0.3);
+  }
+}
