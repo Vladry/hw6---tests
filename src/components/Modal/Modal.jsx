@@ -3,9 +3,9 @@ import './Modal.scss';
 import Button from "../Button/Button";
 import PropTypes from 'prop-types';
 
-const Modal =()=> {
+const Modal =(props)=> {
 
-        const {header, text, closeButton, closeModal, modalState, actions, close, addingPermitted, handleRemoveFromCart} = this.props;
+        const {header, text, closeButton, closeModal, modalState, actions, close, addingPermitted, handleRemoveFromCart} = props;
         if (modalState === 'closed') return null;
         let oKbtn;
         if (modalState === "cart" || modalState === "wishList") { oKbtn = <Button btnCfg={actions.get('Ok')} handler={addingPermitted}/> }

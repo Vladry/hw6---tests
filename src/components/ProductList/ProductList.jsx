@@ -3,8 +3,8 @@ import Card from '../Card/Card.jsx';
 import './productList.scss';
 import PropTypes from "prop-types";
 
-const ProductList =()=> {
-        const {products, cart, wishList, listsHandler} = this.props;
+const ProductList =(props)=> {
+        const {products, cart, wishList, listsHandler} = props;
         const cardlist = products.map(productItem =>
             <Card key={productItem.id}
                   productItem={productItem}
