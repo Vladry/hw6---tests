@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const ProductList =(props)=> {
         const {products, cart, wishList, listsHandler} = props;
-        const cardlist = products.map(productItem =>
+        const cardlist = [...products].map(productItem =>
             <Card key={productItem.id}
                   productItem={productItem}
                   cart = {cart}

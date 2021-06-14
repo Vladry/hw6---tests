@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './cartbasket.scss';
 import Card from "../../components/Card/Card";
 import Modal from "../../components/Modal/Modal";
@@ -36,9 +36,9 @@ const CartBasket = () => {
         closeModal();
     };
 
-    const cartHandler = (id, {target}) => {
-        openModal("remFromCart");
+     const cartHandler = (id, {target}) => {
         setRemId(id);
+        openModal("remFromCart");
     };
 
 

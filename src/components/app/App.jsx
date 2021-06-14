@@ -30,7 +30,7 @@ const App = () => {
             }).then(r => r.json()).then(res => {
                 setProducts(res)
             });
-        }
+        },[]
     );
 
     const openModal = (modalId) => {
