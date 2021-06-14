@@ -1,140 +1,136 @@
-import React, {PureComponent} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.scss';
 import Modal from "../Modal/Modal";
 import modalConfig from '../Modal/modalConfig';
 import modBtnCfg from '../Button/modBtnCfg';
 import ProductList from "../ProductList/ProductList";
-import * as cart from "../../utils/cartHandleUtils.js";
-import * as wishList from "../../utils/wishListHandleUtils.js";
+import * as cartFunc from "../../utils/cartHandleUtils.js";
+import * as wishListFunc from "../../utils/wishListHandleUtils.js";
 import {animateScroll as scroll} from "react-scroll";
 
-class App extends PureComponent {
-    state = {
-        activeModal: "closed",
-        products: [],
-        cart: [],
-        wishList: [], //TODO wishList
+const App = () => {
+    const [activeModal, setActiveModal] = useState("closed");
+    const [products, setProducts] = useState("closed");
+    const [cart, setCart] = useState([]);
+    const [wishList, setWishList] = useState([]);
+    const [addingIdtoCart, setAddingIdtoCart] = useState("");
+    const [addingIdtoWishList, setAddingIdtoWishList] = useState("");
+
+
+    useEffect(() => {
+            localStorage.getItem("cart")
+            && setCart( JSON.parse(localStorage.getItem("cart")));
+            localStorage.getItem("wishList")
+            && setWishList( JSON.parse(localStorage.getItem("wishList")));
+
+            fetch('products.json', {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(r => r.json()).then(res => {
+                setProducts(res)
+            });
+        }
+    );
+
+    const openModal = (modalId) => {
+        setActiveModal(modalId);
+    };
+    scroll.scrollToTop();  //альтернативный скроллинг при открытии Модалки
+
+    const closeModal = () => {
+        setActiveModal("closed");
     };
 
-    openModal(modalId) {
-        this.setState({
-            activeModal: modalId,
-            closeButton: true,
-        });
-        scroll.scrollToTop();  //альтернативный скроллинг при открытии Модалки
-    }
-    closeModal = () => {
-        this.setState({activeModal: "closed"});
-    };
-    closeModAtSideClick = ({target}) => {
+    const closeModAtSideClick = ({target}) => {
         if (target.classList.contains("btn")
             || target.classList.contains('modal')
             || target.classList.contains('svg-class')
         ) return;
         else {
-            this.setState({activeModal: "closed"});
+            setActiveModal("closed");
         }
     };
-    confirmAddingAction = (id, {target}) => { //сюда зщ по клику "Add to Cart" с карточки товара и получили id добавляемого товара и ивент с нажатой карточки
+    const confirmAddingAction = (id, {target}) => { //сюда зщ по клику "Add to Cart" с карточки товара и получили id добавляемого товара и
+        // ивент с нажатой карточки
         if (target.classList.contains('--activate-cart-modal')
             || target.classList.contains('btn')) {
-            // this.setState(() => ({addingFlag: "cart"}));
-            this.openModal("cart"); // запустили модалку, запросили Ок для добавления товара в корзину
-            this.setState(() => ({addingIdtoCart: id}));
+            openModal("cart"); // запустили модалку, запросили Ок для добавления товара в корзину
+            setAddingIdtoCart(id);
         } else if (target.classList.contains('--activate-wish-list-modal')) {
-            // this.setState(() => ({addingFlag: "wishList"}));
-            this.openModal("wishList"); // запустили модалку, запросили Ок для добавления товара в wishList
-            this.setState(() => ({addingIdtoWishList: id}));
+            openModal("wishList"); // запустили модалку, запросили Ок для добавления товара в wishList
+            setAddingIdtoWishList(id);
         }
     };
-    addingPermitted = ({target}) => {  // получили из модалки ок на добавление товара в cart или wishList
-console.log(this.state.activeModal);
-        this.closeModal();
-        if (this.state.activeModal === "cart") {
-            this.addProduct(this.state.addingIdtoCart); // запустили на добавление в Cart товара с id = addingIdtoCart
-        } else if (this.state.activeModal === "wishList") {
-            this.addProduct(this.state.addingIdtoWishList); // запустили на добавление в Cart товара с id = addingIdtoCart
+    const addingPermitted = ({target}) => {  // получили из модалки ок на добавление товара в cart или wishList
+        closeModal();
+        if (activeModal === "cart") {
+            addProduct(addingIdtoCart); // запустили на добавление в Cart товара с id = addingIdtoCart
+        } else if (activeModal === "wishList") {
+            addProduct(addingIdtoWishList); // запустили на добавление в Cart товара с id = addingIdtoCart
         }
 
     };
 
-    addProduct = (id) => { //сюда получить id товара к добавлению в тележку или в wishList
-        const {products} = this.state;
+    const addProduct = (id) => { //сюда получить id товара к добавлению в тележку или в wishList
         const getProduct = products.find(productItem => productItem.id === id);
-        if (this.state.activeModal === "cart") {
-            let currentCart = cart.checkCartInLocalStorage();
+        if (activeModal === "cart") {
+            let currentCart = cartFunc.checkCartInLocalStorage();
             if (currentCart.length === 0) {
-                this.saveCart([getProduct]);
+                saveCart([getProduct]);
                 return;
-            } else if (!cart.alreadyExists(currentCart, getProduct)) {
+            } else if (!cartFunc.alreadyExists(currentCart, getProduct)) {
                 currentCart.push(getProduct);
-                this.saveCart(currentCart)
+                saveCart(currentCart)
             }
-        }else
-        if (this.state.activeModal === "wishList"){
-            let currentWishList = wishList.checkWishListInLocalStorage();
+        } else if (activeModal === "wishList") {
+            let currentWishList = wishListFunc.checkWishListInLocalStorage();
             if (currentWishList.length === 0) {
-                this.saveWishList([getProduct]);
+                saveWishList([getProduct]);
                 return;
-            } else if (!wishList.alreadyExists(currentWishList, getProduct)) {
+            } else if (!wishListFunc.alreadyExists(currentWishList, getProduct)) {
                 currentWishList.push(getProduct);
-                this.saveWishList(currentWishList)
+                saveWishList(currentWishList)
             }
         }
     };
-    saveCart(currentCart) {
-        // if (currentCart.length === 0) return;
+    const saveCart = (currentCart) => {
         localStorage.setItem("cart", JSON.stringify(currentCart));
-        this.setState(() => ({cart: currentCart}));
-    }
-    saveWishList(currentWishList) {
+        setCart(currentCart);
+    };
+    const saveWishList = (currentWishList) => {
         localStorage.setItem("wishList", JSON.stringify(currentWishList));
-        this.setState(() => ({wishList: currentWishList}));
-    }
+        setWishList(currentWishList);
+    };
 
-    render() {
-        const {activeModal, closeButton} = this.state;
-        const invokeHeader = modalConfig.get(activeModal).header;
-        const invokeText = modalConfig.get(activeModal).text;
-        return (
-            <div className={(activeModal === "closed") ? 'wrapper' : 'wrapper  --darkened'}
-                 onClick={this.closeModAtSideClick}
-            >
-                <h3>Страница Заказов</h3>
-                <div className={'modals-container'}>
-                    <Modal id='modal' className='modal' header={invokeHeader} text={invokeText}
-                           modalState={activeModal} closeModal={this.closeModal}
-                           closeButton={closeButton} actions={modBtnCfg}
-                           addingPermitted = {this.addingPermitted}
-                           close={this.closeModal}/>
+    const invokeHeader = modalConfig.get(activeModal).header;
+    const invokeText = modalConfig.get(activeModal).text;
 
-                    <div className={(activeModal === "closed") ? 'btn-section btn-inactive' : 'btn-section '}>
-                        <ProductList products={this.state.products}
-                                     cart={this.state.cart}
-                                     wishList={this.state.wishList}
-                                     listsHandler={this.confirmAddingAction}
-                        />
-                    </div>
 
+    return (
+        <div className={(activeModal === "closed") ? 'wrapper' : 'wrapper  --darkened'}
+             onClick={closeModAtSideClick}
+        >
+            <h3>Страница Заказов</h3>
+            <div className={'modals-container'}>
+                <Modal id='modal' className='modal' header={invokeHeader} text={invokeText}
+                       modalState={activeModal} closeModal={closeModal}
+                       closeButton={true} actions={modBtnCfg}
+                       addingPermitted={addingPermitted}
+                       close={closeModal}/>
+
+                <div className={(activeModal === "closed") ? 'btn-section btn-inactive' : 'btn-section '}>
+                    <ProductList products={products}
+                                 cart={cart}
+                                 wishList={wishList}
+                                 listsHandler={confirmAddingAction}
+                    />
                 </div>
+
             </div>
-        );
-    }
-    componentDidMount() {
-        localStorage.getItem("cart")
-        && this.setState(() => ({cart: JSON.parse(localStorage.getItem("cart"))}));
-        localStorage.getItem("wishList")
-        && this.setState(() => ({wishList: JSON.parse(localStorage.getItem("wishList"))}));
+        </div>
+    );
 
-        fetch('products.json', {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(r => r.json()).then(res => {
-            this.setState(() => ({products: res}))
-        });
-
-    }
-}
+};
 
 export default App;
