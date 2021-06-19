@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './cartbasket.scss';
 import Card from "../../components/Card/Card";
 import Modal from "../../components/Modal/Modal";
@@ -7,9 +7,10 @@ import modBtnCfg from '../../components/Button/modBtnCfg';
 import {animateScroll as scroll} from "react-scroll";
 
 const CartBasket = () => {
-    const [cartContent, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
+    const [cartContent, setCart] = useState([]);
     const [activeModal, setActiveModal] = useState("closed");
     const [remId, setRemId] = useState(null);
+    useEffect(()=> setCart(  JSON.parse(localStorage.getItem("cart")))  );
 
     const openModal = modalId => {
         setActiveModal(modalId);
