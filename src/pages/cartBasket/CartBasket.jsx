@@ -10,7 +10,7 @@ const CartBasket = () => {
     const [cartContent, setCart] = useState([]);
     const [activeModal, setActiveModal] = useState("closed");
     const [remId, setRemId] = useState(null);
-    useEffect(()=> setCart(  JSON.parse(localStorage.getItem("cart")))  );
+    useEffect(()=> setCart(  JSON.parse(localStorage.getItem("cart"))),[]  );
 
     const openModal = modalId => {
         setActiveModal(modalId);

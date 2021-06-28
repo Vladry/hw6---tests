@@ -1,0 +1,11 @@
+const LOAD_SERVER_DATA = "LOAD_SERVER_DATA";
+const IS_LOADING = "IS_LOADING";
+const LOAD_ERROR = "ERROR_LOAD";
+const LOAD_SUCCESS = "LOAD_SUCCESS";
+
+export default {
+    LOAD_SERVER_DATA,
+    IS_LOADING,
+    LOAD_ERROR,
+    LOAD_SUCCESS,
+};

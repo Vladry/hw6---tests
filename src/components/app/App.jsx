@@ -10,7 +10,7 @@ import {animateScroll as scroll} from "react-scroll";
 
 const App = () => {
     const [activeModal, setActiveModal] = useState("closed");
-    const [products, setProducts] = useState("closed");
+    const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [wishList, setWishList] = useState([]);
     const [addingIdtoCart, setAddingIdtoCart] = useState("");

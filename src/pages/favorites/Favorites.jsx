@@ -4,7 +4,7 @@ import Card from "../../components/Card/Card";
 
 const Favorites = () => {
     const [wishListContent, setWishList] = useState([]);
-    useEffect(() => setWishList(  JSON.parse(localStorage.getItem("wishList"))  ));
+    useEffect(() => setWishList(  JSON.parse(localStorage.getItem("wishList"))  ),[] );
 
 
     const wishListHandler = (id, {target}) => {
