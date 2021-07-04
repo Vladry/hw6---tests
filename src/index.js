@@ -10,12 +10,8 @@ import AppRouts from "./routs/AppRouts";
 import NavBar from "./components/navbar/NavBar";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
-import {createStore} from 'redux';
 import {Provider} from "react-redux";
-import rootReducer from './store/reducers';
-import {composeWithDevTools} from 'redux-devtools-extension';
-
-const store = createStore(rootReducer, composeWithDevTools());
+import store from './redux/store';
 
 ReactDOM.render(
     <React.StrictMode>

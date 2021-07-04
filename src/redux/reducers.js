@@ -1,6 +1,6 @@
-import loadingReducer from './loading/reducers';
-import {combineReducers} from "redux";
+import {combineReducers} from 'redux';
+import loadReducers from './loading/index';
 
 export default combineReducers({
-    loading: loadingReducer,
+    loadReducers,
 });

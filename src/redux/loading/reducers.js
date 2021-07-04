@@ -1,72 +1,54 @@
 import {types} from './index';
-import * as loadActions from './actions';
+import * as acts from './actions';
 
 
-export const getData = () => (dispatch) => {
-    // if (!localStorage.getItem("cart")) {
-    //     getState().cart = (JSON.parse(localStorage.getItem("cart")));
-    // }
-    //
-    // if (!localStorage.getItem("wishList")) {
-    //     getState().wishList = JSON.parse(localStorage.getItem("wishList"));
-    // }
-    dispatch(loadActions.isLoading);
+const initialState = {
+    serverData: [],
+    cart: {},
+    wishList: {},
+    isLoading: false,
+    loadError: false,
+    loadSuccess: false,
+};
 
-    console.log("-> in getData()");
+const loadReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case types.LOAD_SERVER_DATA:
+            acts.getData();
+            return {isLoading: false};
 
-    // fetch('products.json', {
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     }
-    // }).then(r => {
-    //     if (!r.ok) dispatch(loadActions.loadError);
-    //     else
-    //         r.json()
-    // })
-    //     .then(res => {
-    //         console.log('-> .then(res => dispatch(loadActions.loadSuccess)');
-    //         dispatch(loadActions.loadSuccess(res));
-    //     });
+        case types.IS_LOADING:
+            console.log("-> IS_LOADING");
+            state = {
+                loadError: false,
+                loadSuccess: false,
+                isLoading: true
+            };
 
+            return state;
+        case types.LOAD_ERROR:
+            console.log("-> LOAD_ERROR");
+            return {
+                loadError: true,
+                loadSuccess: false,
+                isLoading: false
+            };
+        case types.LOAD_SUCCESS:
+            console.log("-> LOAD_SUCCESS");
+            return {
+                loadError: false,
+                loadSuccess: true,
+                isLoading: false
+            };
+        case types.WRITE_TO_STORE:
+            console.log("-> WRITE_TO_STORE");
+            return {
+                serverData: action.payload
+            };
 
-    const initialState = {
-        serverData: [],
-        cart: {},
-        wishList: {},
-        isLoading: false,
-        loadError: false,
-        loadSuccess: false,
-    };
-    const loadReducer = (state = initialState, action) => {
-        switch (action.type) {
-            case types.LOAD_SERVER_DATA:
-                const products = getData();
-                console.log('reading data from server');
-                console.log(products);
-                return {...state, serverData: products};
+        default:
+            return state;
+    }
+};
 
-            case types.IS_LOADING:
-                state = {...state, isLoading: true};
-
-                return state;
-            case types.LOAD_ERROR:
-                return {
-                    ...state,
-                    loadError: true,
-                    loadSuccess: false,
-                    isLoading: false
-                };
-            case types.LOAD_SUCCESS:
-                return {
-                    ...state,
-                    loadError: false,
-                    loadSuccess: true,
-                    isLoading: false
-                };
-
-            default:
-                return state;
-        }
-    };
-
-    export default loadReducer;
+export default loadReducer;

@@ -2,6 +2,7 @@ const LOAD_SERVER_DATA = "LOAD_SERVER_DATA";
 const IS_LOADING = "IS_LOADING";
 const LOAD_ERROR = "ERROR_LOAD";
 const LOAD_SUCCESS = "LOAD_SUCCESS";
+const WRITE_TO_STORE = "WRITE_TO_STORE";
 
 
 export default {
@@ -9,4 +10,5 @@ export default {
     IS_LOADING,
     LOAD_ERROR,
     LOAD_SUCCESS,
+    WRITE_TO_STORE,
 };

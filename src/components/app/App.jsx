@@ -7,6 +7,9 @@ import ProductList from "../ProductList/ProductList";
 import * as cartFunc from "../../utils/cartHandleUtils.js";
 import * as wishListFunc from "../../utils/wishListHandleUtils.js";
 import {animateScroll as scroll} from "react-scroll";
+import {connect, useDispatch} from "react-redux";
+import {loadServerData} from "../../redux/loading/actions";
+
 
 const App = () => {
     const [activeModal, setActiveModal] = useState("closed");
@@ -16,20 +19,23 @@ const App = () => {
     const [addingIdtoCart, setAddingIdtoCart] = useState("");
     const [addingIdtoWishList, setAddingIdtoWishList] = useState("");
 
+    const dispatch = useDispatch();
 
     useEffect(() => {
-            localStorage.getItem("cart")
-            && setCart( JSON.parse(localStorage.getItem("cart")));
-            localStorage.getItem("wishList")
-            && setWishList( JSON.parse(localStorage.getItem("wishList")));
+        dispatch(loadServerData);
 
-            fetch('products.json', {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(r => r.json()).then(res => {
-                setProducts(res)
-            });
+            // localStorage.getItem("cart")
+            // && setCart( JSON.parse(localStorage.getItem("cart")));
+            // localStorage.getItem("wishList")
+            // && setWishList( JSON.parse(localStorage.getItem("wishList")));
+            //
+            // fetch('products.json', {
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     }
+            // }).then(r => r.json()).then(res => {
+            //     setProducts(res)
+            // });
         },[]
     );
 
@@ -132,5 +138,9 @@ const App = () => {
     );
 
 };
+// export default App;
 
-export default App;
+const mapDispatchToProps = {
+
+};
+export default connect(null, mapDispatchToProps)(App);
