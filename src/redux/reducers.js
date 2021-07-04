@@ -1,4 +1,4 @@
-import loadingReducer from './loading/index';
+import loadingReducer from './loading/reducers';
 import {combineReducers} from "redux";
 
 export default combineReducers({
