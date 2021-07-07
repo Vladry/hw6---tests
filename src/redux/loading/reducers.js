@@ -12,6 +12,7 @@ const initialState = {
 };
 
 const loadReducer = (state = initialState, action) => {
+    debugger
     switch (action.type) {
         case types.LOAD_SERVER_DATA:
             acts.getData();

@@ -22,7 +22,7 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(loadServerData);
+        dispatch(loadServerData());
 
             // localStorage.getItem("cart")
             // && setCart( JSON.parse(localStorage.getItem("cart")));

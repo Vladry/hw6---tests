@@ -1,2 +1,2 @@
-import loadActions from './loading/index';
+import loadActions from './loading/';
 
