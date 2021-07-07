@@ -1,48 +1,44 @@
 // import * as types from './types';
 import {types} from './index';
-export const loadServerData = ()=> ({
-    type: types.LOAD_SERVER_DATA,
-    payload: null
-});
 
-const writeToStore = (res) => {
+export const loadServerData = (url, subAction) => (dispatch) => {
+    dispatch(isLoading);
+    fetch(url, {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(r => {
+        if (!r.ok) dispatch(loadError);
+        else
+            return r.json()
+    })
+        .then(res => {
+            dispatch(loadSuccess);
+            dispatch(subAction(res));
+        });
+};
+
+export const writeToStore = (res) => {
     return {
         type: types.WRITE_TO_STORE,
         payload: res
     }
 };
 
-export const getData = ()=> {
-// export const getData = () => (dispatch) => {
-    // if (!localStorage.getItem("cart")) {
-    //     getState().cart = (JSON.parse(localStorage.getItem("cart")));
-    // }
-    //
-    // if (!localStorage.getItem("wishList")) {
-    //     getState().wishList = JSON.parse(localStorage.getItem("wishList"));
-    // }
 
+export const loadCartAndWishlist = () => {
+    let cart, wishList;
+    if (localStorage.getItem("cart")) {
+        cart = (JSON.parse(localStorage.getItem("cart")));
+    }
 
-
-    debugger
-    // dispatch(isLoading);
-
-    console.log("-> in getData()");
-
-    fetch('products.json', {
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then(r => {
-        // if (!r.ok) dispatch(loadError);
-        // else
-            return r.json()
-    })
-        .then(res => {
-            console.log('-> in fetch...then(res=> )');
-            // dispatch(loadSuccess);
-            // dispatch(writeToStore(res));
-        });
+    if (localStorage.getItem("wishList")) {
+        wishList = JSON.parse(localStorage.getItem("wishList"));
+    }
+    return {
+        type: types.LOAD_FROM_LOCALSTORE,
+        payload: [cart, wishList]
+    }
 };
 
 
@@ -54,7 +50,7 @@ export const loadError = {
     type: types.LOAD_ERROR,
     payload: ""
 };
-export const loadSuccess = (res) => ({
+export const loadSuccess = {
     type: types.LOAD_SUCCESS,
-    payload: res
-});
+    payload: null
+};
