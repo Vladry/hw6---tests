@@ -2,7 +2,7 @@
 import {types} from './index';
 
 export const loadServerData = (url, subAction) => (dispatch) => {
-    dispatch(isLoading);
+    dispatch(isLoading() );
     fetch(url, {
         headers: {
             "Content-Type": "application/json"
@@ -13,7 +13,7 @@ export const loadServerData = (url, subAction) => (dispatch) => {
             return r.json()
     })
         .then(res => {
-            dispatch(loadSuccess);
+            dispatch(loadSuccess() );
             dispatch(subAction(res));
         });
 };
@@ -42,15 +42,21 @@ export const loadCartAndWishlist = () => {
 };
 
 
-export const isLoading = {
-    type: types.IS_LOADING,
-    payload: ""
+export const isLoading = () => {
+    return {
+        type: types.IS_LOADING,
+        payload: ""
+    }
 };
-export const loadError = {
-    type: types.LOAD_ERROR,
-    payload: ""
+export const loadError = () => {
+    return {
+        type: types.LOAD_ERROR,
+        payload: ""
+    }
 };
-export const loadSuccess = {
-    type: types.LOAD_SUCCESS,
-    payload: null
+export const loadSuccess = () => {
+    return {
+        type: types.LOAD_SUCCESS,
+        payload: null
+    }
 };
