@@ -35,11 +35,6 @@ const App = () => {
         const getWishList   = useSelector(sel.getWishList);
         const getServerData = useSelector(sel.getServerData);
 
-        useEffect(() => {
-            // setCart(getCart);
-            // setWishList(getWishList);
-            // setProducts(getServerData);
-        }, []);
 
 
         const openModal = (modalId) => {

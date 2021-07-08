@@ -1,4 +1,3 @@
-// import * as types from './types';
 import {types} from './index';
 
 export const loadServerData = (url, subAction) => (dispatch) => {
