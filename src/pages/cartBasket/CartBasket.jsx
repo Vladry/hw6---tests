@@ -9,22 +9,22 @@ import {animateScroll as scroll} from "react-scroll";
 import {sel, acts} from '../../redux/loading/';
 
 const CartBasket = () => {
-    const [activeModal, setActiveModal] = useState("closed");
     const [remId, setRemId] = useState(null);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(acts.loadCart())
     }, []);
+    const activeModal = useSelector(sel.getActiveModal);
 
     const cartContent = useSelector(sel.getCart);
 
     const openModal = modalId => {
-        setActiveModal(modalId);
+        dispatch(acts.setActiveModal(modalId));
         scroll.scrollToTop();
     };
 
     const closeModal = () => {
-        setActiveModal("closed");
+        dispatch(acts.setActiveModal("closed"));
     };
     const closeModAtSideClick = ({target}) => {
         if (target.classList.contains("btn")
@@ -32,7 +32,7 @@ const CartBasket = () => {
             || target.classList.contains('svg-class')
         ) return;
         else {
-            setActiveModal("closed");
+            dispatch(acts.setActiveModal("closed"));
         }
     };
 

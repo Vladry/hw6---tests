@@ -79,8 +79,16 @@ const writeWishList = (items) => {
     };
 };
 
+const setActiveModal = (activeModal) => {
+    return {
+        type: types.SET_ACTIVE_MODAL,
+        payload: activeModal
+    }
+};
+
+
 export default {
     loadServerData, writeToStore, loadCart,
     loadWishlist, isLoading, loadError, loadSuccess,
-    writeCart, writeWishList
+    writeCart, writeWishList, setActiveModal
 };

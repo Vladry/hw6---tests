@@ -7,6 +7,7 @@ const initialState = {
     isLoading: false,
     loadError: false,
     loadSuccess: false,
+    activeModal: "closed",
 };
 
 const loadReducer = (state = initialState, action) => {
@@ -48,7 +49,7 @@ const loadReducer = (state = initialState, action) => {
                 ...state,
                 cart: action.payload
             };
-            case types.LOAD_WISH_LIST:
+        case types.LOAD_WISH_LIST:
             return {
                 ...state,
                 wishList: action.payload
@@ -57,7 +58,8 @@ const loadReducer = (state = initialState, action) => {
             return {...state, cart: action.payload};
         case types.WRITE_WISH_LIST:
             return {...state, wishList: action.payload};
-
+        case types.SET_ACTIVE_MODAL:
+            return {...state, activeModal: action.payload};
         default:
             return state;
     }

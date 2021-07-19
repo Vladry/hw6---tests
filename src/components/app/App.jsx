@@ -13,7 +13,7 @@ import {sel} from "../../redux/loading/";
 
 const App = () => {
         const dispatch = useDispatch();
-        const [activeModal, setActiveModal] = useState("closed");
+
         const products = useSelector(sel.getServerData);
 
         const setCart = (items) => {
@@ -32,14 +32,15 @@ const App = () => {
                 dispatch(acts.loadServerData('products.json', acts.writeToStore));
             }, []
         );
+        const activeModal = useSelector(sel.getActiveModal);
 
         const openModal = (modalId) => {
-            setActiveModal(modalId);
+            dispatch( acts.setActiveModal(modalId) );
         };
         scroll.scrollToTop();  //альтернативный скроллинг при открытии Модалки
 
         const closeModal = () => {
-            setActiveModal("closed");
+           dispatch( acts.setActiveModal("closed"));
         };
 
         const closeModAtSideClick = ({target}) => {
@@ -48,7 +49,7 @@ const App = () => {
                 || target.classList.contains('svg-class')
             ) return;
             else {
-                setActiveModal("closed");
+                dispatch(acts.setActiveModal("closed"));
             }
         };
         const confirmAddingAction = (id, {target}) => { //сюда по клику "Add to Cart" с карточки товара и получили id добавляемого товара и
