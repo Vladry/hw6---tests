@@ -39,17 +39,19 @@ const loadReducer = (state = initialState, action) => {
                 isLoading: false
             };
         case types.WRITE_TO_STORE:
-            console.log("-> WRITE_TO_STORE");
             return {
                 ...state,
                 serverData: action.payload
             };
-        case types.LOAD_FROM_LOCALSTORE:
-            console.log("-> LOAD_FROM_LOCALSTORE");
+        case types.LOAD_CART:
             return {
                 ...state,
-                cart: action.payload[0],
-                wishList: action.payload[1]
+                cart: action.payload
+            };
+            case types.LOAD_WISH_LIST:
+            return {
+                ...state,
+                wishList: action.payload
             };
         case types.WRITE_CART:
             return {...state, cart: action.payload};

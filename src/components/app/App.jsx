@@ -33,10 +33,6 @@ const App = () => {
             }, []
         );
 
-        useEffect(() => {
-            dispatch(acts.loadCartAndWishlist())
-        }, []);
-
         const openModal = (modalId) => {
             setActiveModal(modalId);
         };

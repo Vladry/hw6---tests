@@ -24,18 +24,25 @@ const writeToStore = (res) => {
     }
 };
 
-const loadCartAndWishlist = () => {
-    let cart, wishList;
-    if (localStorage.getItem("cart")) {
+const loadCart = () => {
+    let cart = [];
+    if (localStorage.getItem("cart").length > 0) {
         cart = (JSON.parse(localStorage.getItem("cart")));
     }
+    return {
+        type: types.LOAD_CART,
+        payload: cart
+    }
+};
 
-    if (localStorage.getItem("wishList")) {
+const loadWishlist = () => {
+    let wishList = [];
+    if (localStorage.getItem("wishList").length > 0) {
         wishList = JSON.parse(localStorage.getItem("wishList"));
     }
     return {
-        type: types.LOAD_FROM_LOCALSTORE,
-        payload: [cart, wishList]
+        type: types.LOAD_WISH_LIST,
+        payload: wishList
     }
 };
 
@@ -73,6 +80,7 @@ const writeWishList = (items) => {
 };
 
 export default {
-    loadServerData, writeToStore, loadCartAndWishlist, isLoading,
-    loadError, loadSuccess, writeCart, writeWishList
+    loadServerData, writeToStore, loadCart,
+    loadWishlist, isLoading, loadError, loadSuccess,
+    writeCart, writeWishList
 };

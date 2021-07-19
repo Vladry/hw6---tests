@@ -1,18 +1,22 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import './favorites.scss';
 import Card from "../../components/Card/Card";
 import {sel, acts} from '../../redux/loading/';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 
 const Favorites = () => {
-    const [wishListContent, setWishList] = useState([]);
-    useEffect(() => setWishList(JSON.parse(localStorage.getItem("wishList"))), []);
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(acts.loadWishlist())
+    }, []);
+
+    const wishListContent = useSelector(sel.getWishList);
+
 
     const wishListHandler = (id, {target}) => {
         const newWishListContent = wishListContent.filter(productItem => productItem.id !== id);
-        setWishList(newWishListContent);
+        dispatch(acts.writeWishList(newWishListContent));
         localStorage.setItem("wishList", JSON.stringify(newWishListContent));
     };
 

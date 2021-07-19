@@ -1,16 +1,22 @@
 import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import './cartbasket.scss';
 import Card from "../../components/Card/Card";
 import Modal from "../../components/Modal/Modal";
 import modalConfig from '../../components/Modal/modalConfig';
 import modBtnCfg from '../../components/Button/modBtnCfg';
 import {animateScroll as scroll} from "react-scroll";
+import {sel, acts} from '../../redux/loading/';
 
 const CartBasket = () => {
-    const [cartContent, setCart] = useState([]);
     const [activeModal, setActiveModal] = useState("closed");
     const [remId, setRemId] = useState(null);
-    useEffect(()=> setCart(  JSON.parse(localStorage.getItem("cart"))),[]  );
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(acts.loadCart())
+    }, []);
+
+    const cartContent = useSelector(sel.getCart);
 
     const openModal = modalId => {
         setActiveModal(modalId);
@@ -30,14 +36,15 @@ const CartBasket = () => {
         }
     };
 
+
     const remove = () => {
         const newCartContent = cartContent.filter(productItem => productItem.id !== remId);
-        setCart(newCartContent);
+        dispatch (acts.writeCart(newCartContent) );
         localStorage.setItem("cart", JSON.stringify(newCartContent));
         closeModal();
     };
 
-     const cartHandler = (id, {target}) => {
+    const cartHandler = (id, {target}) => {
         setRemId(id);
         openModal("remFromCart");
     };
@@ -58,7 +65,7 @@ const CartBasket = () => {
 
 
     return (
-        <div className= 'cart'  onClick={closeModAtSideClick}>
+        <div className='cart' onClick={closeModAtSideClick}>
             <h1>Ваша Корзина</h1>
             {emptyNote}
 
