@@ -3,16 +3,14 @@ import Card from '../Card/Card.jsx';
 import './productList.scss';
 import PropTypes from "prop-types";
 import {shallowEqual, useSelector} from "react-redux";
-import * as sel from "../../redux/loading/selectors";
+import {sel} from "../../redux/loading/";
 
-const ProductList = (props) => {
+const ProductList = ({listsHandler}) => {
 
     const getCart = useSelector(sel.getCart, shallowEqual);
     const getWishList = useSelector(sel.getWishList, shallowEqual);
     const getServerData = useSelector(sel.getServerData, shallowEqual);
 
-    const {listsHandler} = props;
-    // const {products, cart, wishList, listsHandler} = props;
     let cardlist;
     if (getServerData) {
         cardlist = [...getServerData].map(productItem =>

@@ -1,11 +1,5 @@
-import {combineReducers} from "redux";
-import loadReducer from './reducers';
-
+export {default as loadReducers} from './reducers';
 export {default as types} from './types';
-export * as acts from './actions';
-export * as sel from './selectors';
+export {default as acts} from './actions';
+export {default as sel} from './selectors';
 
-export default combineReducers({
-    loadReducer,
-
-});

@@ -7,19 +7,25 @@ import ProductList from "../ProductList/ProductList";
 import * as cartFunc from "../../utils/cartHandleUtils.js";
 import * as wishListFunc from "../../utils/wishListHandleUtils.js";
 import {animateScroll as scroll} from "react-scroll";
-import {connect, useDispatch, useSelector} from "react-redux";
-import * as acts from "../../redux/loading/actions";
-import * as sel from "../../redux/loading/selectors";
+import {useDispatch, useSelector} from "react-redux";
+import {acts} from "../../redux/loading/";
+import {sel} from "../../redux/loading/";
 
 const App = () => {
-        const [activeModal, setActiveModal] = useState("closed");
-        const [products, setProducts] = useState([]);
-        const [cart, setCart] = useState([]);
-        const [wishList, setWishList] = useState([]);
-        const [addingIdtoCart, setAddingIdtoCart] = useState("");
-        const [addingIdtoWishList, setAddingIdtoWishList] = useState("");
-
         const dispatch = useDispatch();
+        const [activeModal, setActiveModal] = useState("closed");
+        const products = useSelector(sel.getServerData);
+
+        const setCart = (items) => {
+            dispatch(acts.writeCart(items))
+        };
+        const setWishList = (items) => {
+            dispatch(acts.writeWishList(items))
+        };
+
+        const [addingIdtoCart, setAddingIdtoCart] = useState("");
+
+        const [addingIdtoWishList, setAddingIdtoWishList] = useState("");
 
         useEffect(() => {
                 // аргументы:  products.json - откуда читаем,  writeToStore - куда кладём
@@ -29,13 +35,7 @@ const App = () => {
 
         useEffect(() => {
             dispatch(acts.loadCartAndWishlist())
-        },[]);
-
-        const getCart       = useSelector(sel.getCart);
-        const getWishList   = useSelector(sel.getWishList);
-        const getServerData = useSelector(sel.getServerData);
-
-
+        }, []);
 
         const openModal = (modalId) => {
             setActiveModal(modalId);
@@ -55,7 +55,7 @@ const App = () => {
                 setActiveModal("closed");
             }
         };
-        const confirmAddingAction = (id, {target}) => { //сюда зщ по клику "Add to Cart" с карточки товара и получили id добавляемого товара и
+        const confirmAddingAction = (id, {target}) => { //сюда по клику "Add to Cart" с карточки товара и получили id добавляемого товара и
             // ивент с нажатой карточки
             if (target.classList.contains('--activate-cart-modal')
                 || target.classList.contains('btn')) {
@@ -110,7 +110,6 @@ const App = () => {
         const invokeHeader = modalConfig.get(activeModal).header;
         const invokeText = modalConfig.get(activeModal).text;
 
-
         return (
             <div className={(activeModal === "closed") ? 'wrapper' : 'wrapper  --darkened'}
                  onClick={closeModAtSideClick}
@@ -124,20 +123,13 @@ const App = () => {
                            close={closeModal}/>
 
                     <div className={(activeModal === "closed") ? 'btn-section btn-inactive' : 'btn-section '}>
-                        <ProductList products={products}
-                                     cart={cart}
-                                     wishList={wishList}
-                                     listsHandler={confirmAddingAction}
+                        <ProductList listsHandler={confirmAddingAction}
                         />
                     </div>
-
                 </div>
             </div>
         );
-
     }
 ;
-// export default App;
 
-const mapDispatchToProps = {};
-export default connect(null, mapDispatchToProps)(App);
+export default App;

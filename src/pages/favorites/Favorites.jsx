@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import './favorites.scss';
 import Card from "../../components/Card/Card";
+import {sel, acts} from '../../redux/loading/';
+import {useDispatch} from "react-redux";
+
 
 const Favorites = () => {
     const [wishListContent, setWishList] = useState([]);
-    useEffect(() => setWishList(  JSON.parse(localStorage.getItem("wishList"))  ),[] );
-
+    useEffect(() => setWishList(JSON.parse(localStorage.getItem("wishList"))), []);
+    const dispatch = useDispatch();
 
     const wishListHandler = (id, {target}) => {
         const newWishListContent = wishListContent.filter(productItem => productItem.id !== id);
@@ -21,7 +24,7 @@ const Favorites = () => {
         />
     );
     let emptyNote;
-    (wishListContent.length === 0) ?  emptyNote = <h1 className = '--empty'>ПУСТ!</h1> : emptyNote = null;
+    (wishListContent.length === 0) ? emptyNote = <h1 className='--empty'>ПУСТ!</h1> : emptyNote = null;
 
 
     return (

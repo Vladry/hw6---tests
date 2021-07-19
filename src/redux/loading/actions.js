@@ -1,7 +1,7 @@
 import {types} from './index';
 
-export const loadServerData = (url, subAction) => (dispatch) => {
-    dispatch(isLoading() );
+const loadServerData = (url, subAction) => (dispatch) => {
+    dispatch(isLoading());
     fetch(url, {
         headers: {
             "Content-Type": "application/json"
@@ -12,20 +12,19 @@ export const loadServerData = (url, subAction) => (dispatch) => {
             return r.json()
     })
         .then(res => {
-            dispatch(loadSuccess() );
+            dispatch(loadSuccess());
             dispatch(subAction(res));
         });
 };
 
-export const writeToStore = (res) => {
+const writeToStore = (res) => {
     return {
         type: types.WRITE_TO_STORE,
         payload: res
     }
 };
 
-
-export const loadCartAndWishlist = () => {
+const loadCartAndWishlist = () => {
     let cart, wishList;
     if (localStorage.getItem("cart")) {
         cart = (JSON.parse(localStorage.getItem("cart")));
@@ -40,22 +39,40 @@ export const loadCartAndWishlist = () => {
     }
 };
 
-
-export const isLoading = () => {
+const isLoading = () => {
     return {
         type: types.IS_LOADING,
         payload: ""
     }
 };
-export const loadError = () => {
+const loadError = () => {
     return {
         type: types.LOAD_ERROR,
         payload: ""
     }
 };
-export const loadSuccess = () => {
+const loadSuccess = () => {
     return {
         type: types.LOAD_SUCCESS,
         payload: null
     }
+};
+
+const writeCart = (items) => {
+    return {
+        type: types.WRITE_CART,
+        payload: items
+    };
+};
+
+const writeWishList = (items) => {
+    return {
+        type: types.WRITE_WISH_LIST,
+        payload: items
+    };
+};
+
+export default {
+    loadServerData, writeToStore, loadCartAndWishlist, isLoading,
+    loadError, loadSuccess, writeCart, writeWishList
 };
