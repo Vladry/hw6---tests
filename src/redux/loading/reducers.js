@@ -60,6 +60,8 @@ const loadReducer = (state = initialState, action) => {
             return {...state, wishList: action.payload};
         case types.SET_ACTIVE_MODAL:
             return {...state, activeModal: action.payload};
+        case types.SUBMIT_FORM:
+            return{...state, cart: []};
         default:
             return state;
     }

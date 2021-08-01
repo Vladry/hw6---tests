@@ -8,6 +8,7 @@ const WRITE_CART = "WRITE_CART";
 const LOAD_CART = "LOAD_CART";
 const LOAD_WISH_LIST = "LOAD_WISH_LIST";
 const SET_ACTIVE_MODAL = "SET_ACTIVE_MODAL";
+const SUBMIT_FORM = "SUBMIT_FORM";
 
 export default {
     LOAD_SERVER_DATA,
@@ -19,6 +20,7 @@ export default {
     LOAD_WISH_LIST,
     WRITE_WISH_LIST,
     WRITE_CART,
-    SET_ACTIVE_MODAL
+    SET_ACTIVE_MODAL,
+    SUBMIT_FORM
 }
 ;

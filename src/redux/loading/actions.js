@@ -25,10 +25,10 @@ const writeToStore = (res) => {
 };
 
 const loadCart = () => {
-    let cart = [];
-    if (localStorage.getItem("cart").length > 0) {
-        cart = (JSON.parse(localStorage.getItem("cart")));
-    }
+    // let cart = [];
+    // if (localStorage.getItem("cart") && localStorage.getItem("cart").length > 0) {
+    const cart = (JSON.parse(localStorage.getItem("cart"))) || [];
+    // }
     return {
         type: types.LOAD_CART,
         payload: cart
@@ -86,9 +86,20 @@ const setActiveModal = (activeModal) => {
     }
 };
 
+const submitForm = (formData)=>{
+    const outputCart = JSON.parse(localStorage.getItem('cart'));
+    console.log("Вы разместили заказ на следующие товары: ", outputCart);
+    localStorage.removeItem('cart');
+    console.log("Регистрационные данные покупателя: ", formData);
+
+    return {
+        type: types.SUBMIT_FORM,
+        payload: formData
+    }
+};
 
 export default {
     loadServerData, writeToStore, loadCart,
     loadWishlist, isLoading, loadError, loadSuccess,
-    writeCart, writeWishList, setActiveModal
+    writeCart, writeWishList, setActiveModal, submitForm
 };

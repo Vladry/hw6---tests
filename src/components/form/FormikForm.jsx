@@ -1,16 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
+
 import formValSchema from './formValSchema';
 import './formikForm.scss';
-
-const submitForm = () => {
-};
+import {acts} from '../../redux/loading/';
+import sel from '../../redux/loading/selectors';
 
 const FormikForm = () => {
+    const dispatch = useDispatch();
+    const submit = (formData) => {
+        dispatch(acts.submitForm(formData));
+
+    };
+    const cart = useSelector(sel.getCart);
+
+
     return (
         <div>
             <h3>Provide your personal details in the form below</h3>
-            <Formik onSubmit={submitForm}
+            <Formik onSubmit={submit}
                     initialValues={{
                         name: "",
                         lastName: "",
@@ -21,11 +31,9 @@ const FormikForm = () => {
                     }}
                     validationSchema={formValSchema}
             >
-                {/*{*/}
-                {/*    (formikProps) => console.log(formikProps)*/}
-                {/*}*/}
+
                 {
-                    ({isSubmitting, touched, errors}) => (
+                    ({isSubmitting, isValid, touched, errors}) => (
                         <Form className='form-form'>
                             <Field className='form-field' name='name' type='text' placeholder="Имя пользователя"/>
                             {touched.name && errors.name && <ErrorMessage name='name'/>}
@@ -39,7 +47,8 @@ const FormikForm = () => {
                             {touched.address && errors.address && <ErrorMessage name='address'/>}
                             <Field className='form-field' name='mobile' type='tel' placeholder="Мобильный телефон"/>
                             {touched.mobile && errors.mobile && <ErrorMessage name='mobile'/>}
-                            <Field className='form-field' name='submit' type='button' value="Checkout" disabled={isSubmitting}/>
+                            <Field className='form-field' name='submit' type='submit' value="Checkout"
+                                   disabled={!isValid || isSubmitting || cart.length === 0 }/>
                         </Form>
                     )
                 }
