@@ -34,6 +34,7 @@ const FormikForm = () => {
 
                 {
                     ({isSubmitting, isValid, touched, errors}) => (
+
                         <Form className='form-form'>
                             <Field className='form-field' name='name' type='text' placeholder="Имя пользователя"/>
                             {touched.name && errors.name && <ErrorMessage name='name'/>}
