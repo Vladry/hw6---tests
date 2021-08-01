@@ -7,6 +7,7 @@ import modalConfig from '../../components/Modal/modalConfig';
 import modBtnCfg from '../../components/Button/modBtnCfg';
 import {animateScroll as scroll} from "react-scroll";
 import {sel, acts} from '../../redux/loading/';
+import FormikForm from "../../components/form/FormikForm";
 
 const CartBasket = () => {
     const [remId, setRemId] = useState(null);
@@ -66,6 +67,7 @@ const CartBasket = () => {
 
     return (
         <div className='cart' onClick={closeModAtSideClick}>
+            <FormikForm/>
             <h1>Ваша Корзина</h1>
             {emptyNote}
 
