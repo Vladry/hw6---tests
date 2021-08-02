@@ -108,19 +108,19 @@ const App = () => {
         const invokeText = modalConfig.get(activeModal).text;
 
         return (
-            <div className={(activeModal === "closed") ? 'wrapper' : 'wrapper  --darkened'}
+            <div data-testid='order-page' className={(activeModal === "closed") ? 'wrapper' : 'wrapper  --darkened'}
                  onClick={closeModAtSideClick}
             >
                 <h3>Страница Заказов</h3>
                 <div className={'modals-container'}>
-                    <Modal id='modal' className='modal' header={invokeHeader} text={invokeText}
+                    <Modal id='modal' data-testid='modal' className='modal' header={invokeHeader} text={invokeText}
                            modalState={activeModal} closeModal={closeModal}
                            closeButton={true} actions={modBtnCfg}
                            addingPermitted={addingPermitted}
                            close={closeModal}/>
 
                     <div className={(activeModal === "closed") ? 'btn-section btn-inactive' : 'btn-section '}>
-                        <ProductList listsHandler={confirmAddingAction}
+                        <ProductList data-testid='productlist' listsHandler={confirmAddingAction}
                         />
                     </div>
                 </div>

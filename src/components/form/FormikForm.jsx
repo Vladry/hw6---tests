@@ -8,6 +8,15 @@ import './formikForm.scss';
 import {acts} from '../../redux/loading/';
 import sel from '../../redux/loading/selectors';
 
+export const initUserData = {
+    name: "",
+    lastName: "",
+    age: null,
+    email: '',
+    address: "",
+    mobile: ""
+};
+
 const FormikForm = () => {
     const dispatch = useDispatch();
     const submit = (formData) => {
@@ -21,14 +30,7 @@ const FormikForm = () => {
         <div>
             <h3>Provide your personal details in the form below</h3>
             <Formik onSubmit={submit}
-                    initialValues={{
-                        name: "",
-                        lastName: "",
-                        age: null,
-                        email: '',
-                        address: "",
-                        mobile: ""
-                    }}
+                    initialValues={initUserData}
                     validationSchema={formValSchema}
             >
 

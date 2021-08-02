@@ -86,7 +86,7 @@ const setActiveModal = (activeModal) => {
     }
 };
 
-const submitForm = (formData)=>{
+export const submitForm = (formData)=>{
     const outputCart = JSON.parse(localStorage.getItem('cart'));
     console.log("Вы разместили заказ на следующие товары: ", outputCart);
     localStorage.removeItem('cart');

@@ -1,6 +1,6 @@
 import {types} from './index';
 
-const initialState = {
+export const initialState = {
     serverData: [],
     cart: [],
     wishList: [],
